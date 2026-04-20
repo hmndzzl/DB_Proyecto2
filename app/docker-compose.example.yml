@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: proy2_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      # Mapea solo el código fuente para Hot-Reloading
+      - ./frontend/src:/app/src
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+    container_name: proy2_backend
+    ports:
+      - "${BACKEND_PORT}:3000"
+    volumes:
+      # Mapea solo el código fuente para Nodemon/ts-node-dev
+      - ./backend/src:/app/src
+    environment:
+      - PORT=3000
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    depends_on:
+      db:
+        # El backend espera hasta que Postgres apruebe el healthcheck
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: proy2_db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      # Comando nativo de PostgreSQL para verificar disponibilidad
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
