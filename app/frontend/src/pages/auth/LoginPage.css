@@ -1,0 +1,116 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--arena-suave);
+    padding: 1rem;
+}
+
+.login-card {
+    background-color: var(--blanco-perla);
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(26, 26, 24, 0.08);
+    /* Sombra basada en negro-suave */
+    border: 1px solid var(--gris-arena);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h1 {
+    font-family: var(--font-titulos);
+    color: var(--negro-suave);
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+}
+
+.login-header p {
+    color: var(--gris-carbon);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.login-error {
+    background-color: #FDE8E4;
+    /* Un coral muy suavizado para el fondo */
+    color: var(--coral-urgente);
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--coral-urgente);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--negro-suave);
+}
+
+.form-group input {
+    font-family: var(--font-cuerpo);
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--gris-arena);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--negro-suave);
+    background-color: var(--blanco-perla);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--verde-bosque);
+    box-shadow: 0 0 0 3px var(--menta-suave);
+}
+
+.form-group input::placeholder {
+    color: var(--gris-arena);
+}
+
+.btn-primary {
+    font-family: var(--font-botones);
+    background-color: var(--verde-bosque);
+    color: var(--blanco-perla);
+    border: none;
+    padding: 0.85rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 0.5rem;
+}
+
+.btn-primary:hover {
+    background-color: #23553F;
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+    background-color: var(--gris-arena);
+    cursor: not-allowed;
+}
