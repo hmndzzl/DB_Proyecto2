@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS producto CASCADE;
 DROP TABLE IF EXISTS telefonos_empleados CASCADE;
 DROP TABLE IF EXISTS telefonos_clientes CASCADE;
 DROP TABLE IF EXISTS telefonos_proveedores CASCADE;
+DROP TABLE IF EXISTS rol CASCADE;
 DROP TABLE IF EXISTS empleado CASCADE;
 DROP TABLE IF EXISTS cliente CASCADE;
 DROP TABLE IF EXISTS proveedor CASCADE;
@@ -37,12 +38,20 @@ CREATE TABLE cliente (
     nit_cliente VARCHAR(20) UNIQUE
 );
 
+CREATE TABLE rol (
+    id_rol SERIAL PRIMARY KEY,
+    nombre_rol VARCHAR(50) UNIQUE NOT NULL
+);
+
 CREATE TABLE empleado (
     id_empleado SERIAL PRIMARY KEY,
     nombre_empleado VARCHAR(100) NOT NULL,
-    correo_empleado VARCHAR(100) UNIQUE NOT NULL,
+    correo_empleado VARCHAR(100) UNIQUE NOT NULL, 
+    password_empleado VARCHAR(255) NOT NULL,
     fecha_contratacion DATE NOT NULL,
+    id_rol INT NOT NULL,                         
     id_encargado INT,
+    FOREIGN KEY (id_rol) REFERENCES rol(id_rol),
     FOREIGN KEY (id_encargado) REFERENCES empleado(id_empleado)
 );
 

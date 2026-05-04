@@ -49,23 +49,41 @@ INSERT INTO cliente (nombre_cliente, correo_cliente, nit_cliente) VALUES
 ('Roberto Aguilar', 'raguilar@mail.com', '1023-W'), ('Mónica Navarro', 'monica.n@mail.com', '1024-X'),
 ('Hugo Delgado', 'hdelgado@mail.com', '1025-Y');
 
--- 4. EMPLEADOS (25 registros, ID 1 es el gerente)
-INSERT INTO empleado (nombre_empleado, correo_empleado, fecha_contratacion, id_encargado) VALUES
-('Gerente General', 'gerente@tienda.com', '2020-01-01', NULL),
-('Empleado 2', 'emp2@tienda.com', '2021-02-15', 1), ('Empleado 3', 'emp3@tienda.com', '2021-03-20', 1),
-('Empleado 4', 'emp4@tienda.com', '2021-04-10', 1), ('Empleado 5', 'emp5@tienda.com', '2021-05-05', 1),
-('Empleado 6', 'emp6@tienda.com', '2021-06-12', 2), ('Empleado 7', 'emp7@tienda.com', '2021-07-22', 2),
-('Empleado 8', 'emp8@tienda.com', '2021-08-30', 2), ('Empleado 9', 'emp9@tienda.com', '2021-09-14', 3),
-('Empleado 10', 'emp10@tienda.com', '2021-10-01', 3), ('Empleado 11', 'emp11@tienda.com', '2021-11-11', 3),
-('Empleado 12', 'emp12@tienda.com', '2021-12-05', 4), ('Empleado 13', 'emp13@tienda.com', '2022-01-18', 4),
-('Empleado 14', 'emp14@tienda.com', '2022-02-25', 4), ('Empleado 15', 'emp15@tienda.com', '2022-03-08', 5),
-('Empleado 16', 'emp16@tienda.com', '2022-04-14', 5), ('Empleado 17', 'emp17@tienda.com', '2022-05-20', 5),
-('Empleado 18', 'emp18@tienda.com', '2022-06-30', 2), ('Empleado 19', 'emp19@tienda.com', '2022-07-07', 2),
-('Empleado 20', 'emp20@tienda.com', '2022-08-16', 3), ('Empleado 21', 'emp21@tienda.com', '2022-09-21', 3),
-('Empleado 22', 'emp22@tienda.com', '2022-10-29', 4), ('Empleado 23', 'emp23@tienda.com', '2022-11-15', 4),
-('Empleado 24', 'emp24@tienda.com', '2022-12-02', 5), ('Empleado 25', 'emp25@tienda.com', '2023-01-10', 5);
+-- 4. Roles (2 roles)
+INSERT INTO rol (nombre_rol) VALUES ('Administrador'), ('Vendedor');
 
--- 5. TELÉFONOS PROVEEDORES (25 registros)
+-- 5. EMPLEADOS (25 registros, ID 1 es el gerente)
+-- 5. EMPLEADOS (25 registros, ID 1 es el gerente)
+-- Nota: La contraseña para todos los usuarios es '123456'
+-- id_rol: 1 (Administrador), 2 (Vendedor)
+INSERT INTO empleado (nombre_empleado, correo_empleado, password_empleado, fecha_contratacion, id_rol, id_encargado) VALUES
+('Carlos Valdez', 'gerente@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2020-01-01', 1, NULL),
+('Luis Arana', 'emp2@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-02-15', 2, 1),
+('María José Pinto', 'emp3@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-03-20', 2, 1),
+('Ana Lima', 'emp4@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-04-10', 2, 1),
+('Pedro Paz', 'emp5@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-05-05', 2, 1),
+('Juan Santos', 'emp6@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-06-12', 2, 2),
+('Marta Silva', 'emp7@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-07-22', 2, 2),
+('Julia Reyes', 'emp8@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-08-30', 2, 2),
+('Pablo Soto', 'emp9@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-09-14', 2, 3),
+('Karla Mota', 'emp10@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-10-01', 2, 3),
+('Luis Pineda', 'emp11@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-11-11', 2, 3),
+('Carmen Vaca', 'emp12@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-12-05', 2, 4),
+('Rosa Milla', 'emp13@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-01-18', 2, 4),
+('Hugo Prado', 'emp14@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-02-25', 2, 4),
+('Paco Lira', 'emp15@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-03-08', 2, 5),
+('Luz Rivas', 'emp16@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-04-14', 2, 5),
+('Omar Toro', 'emp17@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-05-20', 2, 5),
+('José Mora', 'emp18@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-06-30', 2, 2),
+('Sara Cruz', 'emp19@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-07-07', 2, 2),
+('Raúl Pina', 'emp20@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-08-16', 2, 3),
+('Dora Vega', 'emp21@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-09-21', 2, 3),
+('Saúl Cano', 'emp22@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-10-29', 2, 4),
+('Rita Ríos', 'emp23@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-11-15', 2, 4),
+('Joel Mazo', 'emp24@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-12-02', 2, 5),
+('Emma Luna', 'emp25@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2023-01-10', 2, 5);
+
+-- 6. TELÉFONOS PROVEEDORES (25 registros)
 INSERT INTO telefonos_proveedores (telefono_proveedor, id_proveedor) VALUES
 ('555-1001', 1), ('555-1002', 2), ('555-1003', 3), ('555-1004', 4), ('555-1005', 5),
 ('555-1006', 6), ('555-1007', 7), ('555-1008', 8), ('555-1009', 9), ('555-1010', 10),
@@ -73,7 +91,7 @@ INSERT INTO telefonos_proveedores (telefono_proveedor, id_proveedor) VALUES
 ('555-1016', 16), ('555-1017', 17), ('555-1018', 18), ('555-1019', 19), ('555-1020', 20),
 ('555-1021', 21), ('555-1022', 22), ('555-1023', 23), ('555-1024', 24), ('555-1025', 25);
 
--- 6. TELÉFONOS CLIENTES (25 registros)
+-- 7. TELÉFONOS CLIENTES (25 registros)
 INSERT INTO telefonos_clientes (telefono_cliente, id_cliente) VALUES
 ('444-2001', 1), ('444-2002', 2), ('444-2003', 3), ('444-2004', 4), ('444-2005', 5),
 ('444-2006', 6), ('444-2007', 7), ('444-2008', 8), ('444-2009', 9), ('444-2010', 10),
@@ -81,7 +99,7 @@ INSERT INTO telefonos_clientes (telefono_cliente, id_cliente) VALUES
 ('444-2016', 16), ('444-2017', 17), ('444-2018', 18), ('444-2019', 19), ('444-2020', 20),
 ('444-2021', 21), ('444-2022', 22), ('444-2023', 23), ('444-2024', 24), ('444-2025', 25);
 
--- 7. TELÉFONOS EMPLEADOS (25 registros)
+-- 8. TELÉFONOS EMPLEADOS (25 registros)
 INSERT INTO telefonos_empleados (telefono_empleado, id_empleado) VALUES
 ('333-3001', 1), ('333-3002', 2), ('333-3003', 3), ('333-3004', 4), ('333-3005', 5),
 ('333-3006', 6), ('333-3007', 7), ('333-3008', 8), ('333-3009', 9), ('333-3010', 10),
@@ -89,7 +107,7 @@ INSERT INTO telefonos_empleados (telefono_empleado, id_empleado) VALUES
 ('333-3016', 16), ('333-3017', 17), ('333-3018', 18), ('333-3019', 19), ('333-3020', 20),
 ('333-3021', 21), ('333-3022', 22), ('333-3023', 23), ('333-3024', 24), ('333-3025', 25);
 
--- 8. PRODUCTOS (25 registros)
+-- 9. PRODUCTOS (25 registros)
 INSERT INTO producto (nombre_producto, precio_producto, stock_producto, id_categoria, id_proveedor) VALUES
 ('Smart TV 55', 4500.00, 10, 6, 6), ('Laptop Pro 15', 8500.00, 15, 3, 3),
 ('iPhone 14', 7500.00, 20, 4, 4), ('Bocina Bluetooth', 850.00, 30, 5, 5),
@@ -105,7 +123,7 @@ INSERT INTO producto (nombre_producto, precio_producto, stock_producto, id_categ
 ('Pack Cerveza', 150.00, 80, 24, 24), ('Vino Tinto', 250.00, 35, 24, 24),
 ('Cereal Familiar', 45.00, 120, 25, 25);
 
--- 9. VENTAS (25 registros)
+-- 10. VENTAS (25 registros)
 -- Para simplificar el cuadre contable del seed, cada venta tendrá un solo producto.
 INSERT INTO venta (id_cliente, id_empleado, total_venta) VALUES
 (1, 2, 4500.00), (2, 3, 8500.00), (3, 4, 7500.00), (4, 5, 850.00), (5, 6, 3500.00),
@@ -114,7 +132,7 @@ INSERT INTO venta (id_cliente, id_empleado, total_venta) VALUES
 (16, 17, 350.00), (17, 18, 25.00), (18, 19, 450.00), (19, 20, 120.00), (20, 21, 150.00),
 (21, 22, 550.00), (22, 23, 850.00), (23, 24, 150.00), (24, 25, 250.00), (25, 2, 45.00);
 
--- 10. DETALLE DE VENTAS (25 registros - Cuadrados matemáticamente)
+-- 11. DETALLE DE VENTAS (25 registros - Cuadrados matemáticamente)
 INSERT INTO detalle_venta (id_venta, id_producto, cantidad, precio_unitario, subtotal) VALUES
 (1, 1, 1, 4500.00, 4500.00), (2, 2, 1, 8500.00, 8500.00), (3, 3, 1, 7500.00, 7500.00),
 (4, 4, 1, 850.00, 850.00), (5, 5, 1, 3500.00, 3500.00), (6, 6, 1, 5500.00, 5500.00),
