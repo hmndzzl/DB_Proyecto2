@@ -130,3 +130,9 @@ JOIN empleado e ON v.id_empleado = e.id_empleado
 JOIN detalle_venta dv ON v.id_venta = dv.id_venta
 JOIN producto p ON dv.id_producto = p.id_producto
 JOIN categoria cat ON p.id_categoria = cat.id_categoria;
+
+-- ==============================================================================
+-- ÍNDICES (Para optimización de consultas)
+-- ==========================================
+CREATE INDEX idx_cliente_nit ON cliente(nit_cliente);
+CREATE INDEX idx_venta_fecha ON venta(fecha_venta);
