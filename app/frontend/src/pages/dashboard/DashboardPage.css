@@ -1,0 +1,106 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.dashboard-header h1 {
+    font-family: var(--font-titulos);
+    color: var(--negro-suave);
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+}
+
+.dashboard-header p {
+    color: var(--gris-carbon);
+    margin: 0;
+}
+
+.btn-export {
+    font-family: var(--font-botones);
+    background-color: var(--ambar-calido);
+    color: var(--negro-suave);
+    font-weight: 600;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-export:hover {
+    transform: translateY(-2px);
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.card {
+    background-color: var(--blanco-perla);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(26, 26, 24, 0.05);
+    border: 1px solid var(--gris-arena);
+    border-left: 5px solid var(--verde-bosque);
+}
+
+.card h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--gris-carbon);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.card-value {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--negro-suave);
+}
+
+.report-section {
+    background-color: var(--blanco-perla);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(26, 26, 24, 0.05);
+    border: 1px solid var(--gris-arena);
+}
+
+.report-section h2 {
+    font-family: var(--font-titulos);
+    margin: 0 0 1.5rem 0;
+    color: var(--negro-suave);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gris-arena);
+}
+
+.data-table th {
+    background-color: var(--arena-suave);
+    color: var(--gris-carbon);
+    font-weight: 600;
+}
+
+.data-table tr:hover {
+    background-color: var(--menta-suave);
+}
