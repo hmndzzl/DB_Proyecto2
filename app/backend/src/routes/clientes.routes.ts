@@ -4,7 +4,6 @@ import { authMiddleware } from '../middlewares/auth.middleware';
 
 const router = Router();
 
-// Protegemos la ruta con JWT
 router.use(authMiddleware);
 
 // GET /api/clientes/:nit
