@@ -6,6 +6,7 @@ import pool from './config/db';
 import authRoutes from './routes/auth.routes';
 import productosRoutes from './routes/productos.routes';
 import ventasRoutes from './routes/ventas.routes';
+import reportesRoutes from './routes/reportes.routes';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/productos', productosRoutes);
 app.use('/api/ventas', ventasRoutes);
+app.use('/api/reportes', reportesRoutes);
 
 // Ruta de salud para verificar que el contenedor del backend está vivo
 app.get('/health', (_req, res) => {

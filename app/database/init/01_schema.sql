@@ -109,3 +109,24 @@ CREATE TABLE detalle_venta (
     FOREIGN KEY (id_venta) REFERENCES venta(id_venta) ON DELETE CASCADE,
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
+
+-- ==============================================================================
+-- VISTAS
+-- ==========================================
+CREATE OR REPLACE VIEW vista_ventas_detalladas AS
+SELECT 
+    v.id_venta,
+    v.fecha_venta,
+    c.nombre_cliente,
+    e.nombre_empleado,
+    p.nombre_producto,
+    cat.nombre_categoria,
+    dv.cantidad,
+    dv.precio_unitario,
+    dv.subtotal
+FROM venta v
+JOIN cliente c ON v.id_cliente = c.id_cliente
+JOIN empleado e ON v.id_empleado = e.id_empleado
+JOIN detalle_venta dv ON v.id_venta = dv.id_venta
+JOIN producto p ON dv.id_producto = p.id_producto
+JOIN categoria cat ON p.id_categoria = cat.id_categoria;
