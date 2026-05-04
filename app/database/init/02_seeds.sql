@@ -53,35 +53,34 @@ INSERT INTO cliente (nombre_cliente, correo_cliente, nit_cliente) VALUES
 INSERT INTO rol (nombre_rol) VALUES ('Administrador'), ('Vendedor');
 
 -- 5. EMPLEADOS (25 registros, ID 1 es el gerente)
--- 5. EMPLEADOS (25 registros, ID 1 es el gerente)
 -- Nota: La contraseña para todos los usuarios es '123456'
 -- id_rol: 1 (Administrador), 2 (Vendedor)
 INSERT INTO empleado (nombre_empleado, correo_empleado, password_empleado, fecha_contratacion, id_rol, id_encargado) VALUES
-('Carlos Valdez', 'gerente@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2020-01-01', 1, NULL),
-('Luis Arana', 'emp2@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-02-15', 2, 1),
-('María José Pinto', 'emp3@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-03-20', 2, 1),
-('Ana Lima', 'emp4@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-04-10', 2, 1),
-('Pedro Paz', 'emp5@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-05-05', 2, 1),
-('Juan Santos', 'emp6@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-06-12', 2, 2),
-('Marta Silva', 'emp7@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-07-22', 2, 2),
-('Julia Reyes', 'emp8@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-08-30', 2, 2),
-('Pablo Soto', 'emp9@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-09-14', 2, 3),
-('Karla Mota', 'emp10@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-10-01', 2, 3),
-('Luis Pineda', 'emp11@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-11-11', 2, 3),
-('Carmen Vaca', 'emp12@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2021-12-05', 2, 4),
-('Rosa Milla', 'emp13@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-01-18', 2, 4),
-('Hugo Prado', 'emp14@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-02-25', 2, 4),
-('Paco Lira', 'emp15@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-03-08', 2, 5),
-('Luz Rivas', 'emp16@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-04-14', 2, 5),
-('Omar Toro', 'emp17@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-05-20', 2, 5),
-('José Mora', 'emp18@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-06-30', 2, 2),
-('Sara Cruz', 'emp19@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-07-07', 2, 2),
-('Raúl Pina', 'emp20@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-08-16', 2, 3),
-('Dora Vega', 'emp21@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-09-21', 2, 3),
-('Saúl Cano', 'emp22@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-10-29', 2, 4),
-('Rita Ríos', 'emp23@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-11-15', 2, 4),
-('Joel Mazo', 'emp24@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2022-12-02', 2, 5),
-('Emma Luna', 'emp25@tienda.com', '$2b$10$k1wJ/4B9T.8D5w5O5q5O1o9.o5.o5.o5.o5.o5.o5.o5.o5.o5.o5', '2023-01-10', 2, 5);
+('Carlos Valdez', 'gerente@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2020-01-01', 1, NULL),
+('Luis Arana', 'emp2@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-02-15', 2, 1),
+('María José Pinto', 'emp3@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-03-20', 2, 1),
+('Ana Lima', 'emp4@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-04-10', 2, 1),
+('Pedro Paz', 'emp5@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-05-05', 2, 1),
+('Juan Santos', 'emp6@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-06-12', 2, 2),
+('Marta Silva', 'emp7@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-07-22', 2, 2),
+('Julia Reyes', 'emp8@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-08-30', 2, 2),
+('Pablo Soto', 'emp9@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-09-14', 2, 3),
+('Karla Mota', 'emp10@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-10-01', 2, 3),
+('Luis Pineda', 'emp11@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-11-11', 2, 3),
+('Carmen Vaca', 'emp12@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-12-05', 2, 4),
+('Rosa Milla', 'emp13@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-01-18', 2, 4),
+('Hugo Prado', 'emp14@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-02-25', 2, 4),
+('Paco Lira', 'emp15@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-03-08', 2, 5),
+('Luz Rivas', 'emp16@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-04-14', 2, 5),
+('Omar Toro', 'emp17@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-05-20', 2, 5),
+('José Mora', 'emp18@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-06-30', 2, 2),
+('Sara Cruz', 'emp19@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-07-07', 2, 2),
+('Raúl Pina', 'emp20@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-08-16', 2, 3),
+('Dora Vega', 'emp21@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-09-21', 2, 3),
+('Saúl Cano', 'emp22@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-10-29', 2, 4),
+('Rita Ríos', 'emp23@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-11-15', 2, 4),
+('Joel Mazo', 'emp24@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2022-12-02', 2, 5),
+('Emma Luna', 'emp25@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2023-01-10', 2, 5);
 
 -- 6. TELÉFONOS PROVEEDORES (25 registros)
 INSERT INTO telefonos_proveedores (telefono_proveedor, id_proveedor) VALUES
