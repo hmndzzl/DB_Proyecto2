@@ -1,0 +1,48 @@
+.categorias-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.categorias-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.categorias-header h1 {
+    font-family: var(--font-titulos);
+    color: var(--negro-suave);
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+}
+
+.categorias-header p {
+    color: var(--gris-carbon);
+    margin: 0;
+}
+
+.btn-agregar {
+    background-color: var(--verde-bosque);
+    color: var(--blanco-perla);
+    font-family: var(--font-botones);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(45, 106, 79, 0.2);
+}
+
+.btn-agregar:hover {
+    background-color: #23553F;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(45, 106, 79, 0.3);
+}
+
+.text-muted {
+    color: #8a8a8a;
+    font-style: italic;
+}

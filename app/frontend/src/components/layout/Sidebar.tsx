@@ -38,6 +38,9 @@ export const Sidebar = () => {
                 <Link to="/productos" className={`nav-item ${location.pathname === '/productos' ? 'active' : ''}`}>
                     Productos
                 </Link>
+                <Link to="/categorias" className={`nav-item ${location.pathname === '/categorias' ? 'active' : ''}`}>
+                    Categorías
+                </Link>
                 <Link to="/ventas" className={`nav-item ${location.pathname === '/ventas' ? 'active' : ''}`}>
                     Ventas
                 </Link>
