@@ -4,6 +4,7 @@ import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { ProtectedRoute } from './components/ui/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 import { ProductosPage } from './pages/productos/ProductosPage';
+import { CategoriasPage } from './pages/productos/CategoriasPage';
 import { VentasPage } from './pages/ventas/VentasPage';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/productos" element={<ProductosPage />} />
+            <Route path="/categorias" element={<CategoriasPage />} />
             <Route path="/ventas" element={<VentasPage />} />
           </Route>
         </Route>

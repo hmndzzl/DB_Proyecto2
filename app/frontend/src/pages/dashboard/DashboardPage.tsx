@@ -8,8 +8,15 @@ interface CategoriaReporte {
     ingresos_totales: string;
 }
 
+interface ProductoSinVenta {
+    nombre_producto: string;
+    nombre_categoria: string;
+    stock_producto: number;
+}
+
 export const DashboardPage = () => {
     const [reporteVentas, setReporteVentas] = useState<CategoriaReporte[]>([]);
+    const [productosSinVentas, setProductosSinVentas] = useState<ProductoSinVenta[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // Recuperar usuario
@@ -25,13 +32,13 @@ export const DashboardPage = () => {
     useEffect(() => {
         const fetchReportes = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/reportes/ventas`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setReporteVentas(data);
-                }
+                const [resVentas, resSinVentas] = await Promise.all([
+                    fetch(`${import.meta.env.VITE_API_URL}/api/reportes/ventas`, { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch(`${import.meta.env.VITE_API_URL}/api/reportes/productos-sin-ventas`, { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+                
+                if (resVentas.ok) setReporteVentas(await resVentas.json());
+                if (resSinVentas.ok) setProductosSinVentas(await resSinVentas.json());
             } catch (error) {
                 console.error('Error cargando reportes:', error);
             } finally {
@@ -119,6 +126,33 @@ export const DashboardPage = () => {
                                             <td>{row.nombre_categoria}</td>
                                             <td>{row.total_operaciones}</td>
                                             <td>Q. {Number(row.ingresos_totales).toFixed(2)}</td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {/* Tabla de Productos sin Ventas (Subquery) */}
+                    <div className="report-section" style={{ marginTop: '2rem' }}>
+                        <h2>Productos sin Historial de Ventas</h2>
+                        <table className="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Categoría</th>
+                                    <th>Stock Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {productosSinVentas.length === 0 ? (
+                                    <tr><td colSpan={3} style={{ textAlign: 'center' }}>Todos los productos tienen al menos una venta</td></tr>
+                                ) : (
+                                    productosSinVentas.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{row.nombre_producto}</td>
+                                            <td>{row.nombre_categoria}</td>
+                                            <td><span className="stock-badge normal">{row.stock_producto} uds.</span></td>
                                         </tr>
                                     ))
                                 )}

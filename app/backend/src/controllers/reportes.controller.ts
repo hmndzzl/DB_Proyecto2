@@ -84,6 +84,33 @@ export const reporteClientesVipSubquery = async (_req: Request, res: Response) =
 };
 
 // ==========================================
+// REPORTE 4: Consulta con Subquery correlacionado (NOT EXISTS)
+// ==========================================
+export const reporteProductosSinVentas = async (_req: Request, res: Response) => {
+    try {
+        const query = `
+      SELECT 
+          p.nombre_producto,
+          c.nombre_categoria,
+          p.stock_producto
+      FROM producto p
+      JOIN categoria c ON p.id_categoria = c.id_categoria
+      WHERE NOT EXISTS (
+          -- SUBQUERY CORRELACIONADO: Verifica si hay detalles de venta para este producto
+          SELECT 1 
+          FROM detalle_venta dv 
+          WHERE dv.id_producto = p.id_producto
+      )
+      ORDER BY p.stock_producto DESC;
+    `;
+        const result = await pool.query(query);
+        res.json(result.rows);
+    } catch (error) {
+        res.status(500).json({ mensaje: 'Error al generar reporte de productos sin ventas' });
+    }
+};
+
+// ==========================================
 // EXPORTAR: Generar archivo CSV de ventas
 // ==========================================
 export const exportarVentasCSV = async (_req: Request, res: Response) => {
