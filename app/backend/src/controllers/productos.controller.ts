@@ -9,7 +9,8 @@ export const obtenerProductos = async (_req: Request, res: Response) => {
         // JOIN para traer el nombre de la categoría y del proveedor
         const query = `
       SELECT p.id_producto, p.nombre_producto, p.precio_producto, p.stock_producto, 
-             c.nombre_categoria, pr.nombre_proveedor 
+             p.id_categoria, c.nombre_categoria, 
+             p.id_proveedor, pr.nombre_proveedor 
       FROM producto p
       JOIN categoria c ON p.id_categoria = c.id_categoria
       JOIN proveedor pr ON p.id_proveedor = pr.id_proveedor
