@@ -6,28 +6,31 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import { ProductosPage } from './pages/productos/ProductosPage';
 import { CategoriasPage } from './pages/productos/CategoriasPage';
 import { VentasPage } from './pages/ventas/VentasPage';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Ruta Pública */}
-        <Route path="/login" element={<LoginPage />} />
+      <AuthProvider>
+        <Routes>
+          {/* Ruta Pública */}
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* Rutas Privadas */}
-        <Route element={<ProtectedRoute />}>
-          {/* Si está autenticado, se muestra el Layout con el Sidebar */}
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/productos" element={<ProductosPage />} />
-            <Route path="/categorias" element={<CategoriasPage />} />
-            <Route path="/ventas" element={<VentasPage />} />
+          {/* Rutas Privadas */}
+          <Route element={<ProtectedRoute />}>
+            {/* Si está autenticado, se muestra el Layout con el Sidebar */}
+            <Route element={<DashboardLayout />}>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/productos" element={<ProductosPage />} />
+              <Route path="/categorias" element={<CategoriasPage />} />
+              <Route path="/ventas" element={<VentasPage />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Redirección por defecto: Si se escribe cualquier otra URL, lo manda al login */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
+          {/* Redirección por defecto: Si se escribe cualquier otra URL, lo manda al login */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
