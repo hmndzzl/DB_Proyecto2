@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import './LoginPage.css';
 
 export const LoginPage = () => {
@@ -6,6 +7,8 @@ export const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,15 +31,16 @@ export const LoginPage = () => {
                 throw new Error(data.mensaje || 'Credenciales inválidas');
             }
 
-            // Guardamos el token y los datos del usuario en localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
+            // Guarda el token y los datos del usuario a través del contexto
+            login(data.token, data.user);
 
-            // Aquí puedes redirigir al Dashboard
+            // Redirigir al Dashboard
             window.location.href = '/dashboard';
 
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            }
         } finally {
             setIsLoading(false);
         }
