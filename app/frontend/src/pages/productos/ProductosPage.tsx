@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import './ProductosPage.css';
 
 interface Producto {
@@ -37,11 +38,10 @@ export const ProductosPage = () => {
         id_proveedor: ''
     });
 
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const esAdmin = user.rol === 1;
+    const { token, user } = useAuth();
+    const esAdmin = user?.rol === 1;
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const headers = { 'Authorization': `Bearer ${token}` };
 
@@ -61,9 +61,12 @@ export const ProductosPage = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchData(); 
+    }, [fetchData]);
 
     const handleOpenModal = (prod?: Producto) => {
         if (prod) {
@@ -115,6 +118,7 @@ export const ProductosPage = () => {
                 alert("Ocurrió un error al guardar el producto");
             }
         } catch (error) {
+            console.error(error);
             alert("Error de conexión");
         }
     };

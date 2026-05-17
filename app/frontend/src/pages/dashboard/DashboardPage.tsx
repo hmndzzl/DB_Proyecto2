@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './DashboardPage.css';
 
 interface CategoriaReporte {
@@ -19,15 +20,7 @@ export const DashboardPage = () => {
     const [productosSinVentas, setProductosSinVentas] = useState<ProductoSinVenta[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Recuperar usuario
-    const userString = localStorage.getItem('user');
-    const user = userString ? JSON.parse(userString) : null;
-    const token = localStorage.getItem('token');
-
-    // Si es un vendedor lo dirige inmediatamente a /productos
-    if (user?.rol !== 1) {
-        return <Navigate to="/productos" replace />;
-    }
+    const { user, token } = useAuth();
 
     useEffect(() => {
         const fetchReportes = async () => {
@@ -66,6 +59,7 @@ export const DashboardPage = () => {
             a.click();
             a.remove();
         } catch (error) {
+            console.error(error);
             alert('Hubo un problema al exportar el reporte');
         }
     };
@@ -73,6 +67,11 @@ export const DashboardPage = () => {
     // Cálculos totales para las tarjetas
     const ingresosTotales = reporteVentas.reduce((acc, curr) => acc + Number(curr.ingresos_totales), 0);
     const totalOperaciones = reporteVentas.reduce((acc, curr) => acc + Number(curr.total_operaciones), 0);
+
+    // Si es un vendedor lo dirige inmediatamente a /productos
+    if (user?.rol !== 1) {
+        return <Navigate to="/productos" replace />;
+    }
 
     return (
         <div className="dashboard-container">

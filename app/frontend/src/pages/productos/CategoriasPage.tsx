@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import './CategoriasPage.css';
 
 interface Categoria {
@@ -20,11 +21,10 @@ export const CategoriasPage = () => {
         descripcion_categoria: ''
     });
 
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const esAdmin = user.rol === 1;
+    const { token, user } = useAuth();
+    const esAdmin = user?.rol === 1;
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/catalogos/categorias`, {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -37,9 +37,12 @@ export const CategoriasPage = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchData(); 
+    }, [fetchData]);
 
     const handleOpenModal = (cat?: Categoria) => {
         if (cat) {
@@ -82,6 +85,7 @@ export const CategoriasPage = () => {
                 alert(`Ocurrió un error: ${err.mensaje}`);
             }
         } catch (error) {
+            console.error(error);
             alert("Error de conexión");
         }
     };

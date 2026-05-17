@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer, useMemo, useCallback } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { cartReducer } from './CartReducer';
 import './VentasPage.css';
 
 interface Producto {
@@ -16,14 +18,6 @@ interface Venta {
     nombre_cliente?: string;
 }
 
-interface CartItem {
-    id_producto: number;
-    nombre_producto: string;
-    precio_unitario: number;
-    cantidad: number;
-    subtotal: number;
-}
-
 export const VentasPage = () => {
     const [ventas, setVentas] = useState<Venta[]>([]);
     const [productos, setProductos] = useState<Producto[]>([]);
@@ -31,7 +25,7 @@ export const VentasPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Estado del Carrito y Selección de Producto
-    const [carrito, setCarrito] = useState<CartItem[]>([]);
+    const [carrito, dispatchCarrito] = useReducer(cartReducer, []);
     const [selectedProductId, setSelectedProductId] = useState('');
     const [selectedCantidad, setSelectedCantidad] = useState(1);
 
@@ -40,10 +34,9 @@ export const VentasPage = () => {
     const [isClienteRegistrado, setIsClienteRegistrado] = useState(false);
     const [isSearchingCliente, setIsSearchingCliente] = useState(false);
 
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const { token, user } = useAuth();
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const headers = { 'Authorization': `Bearer ${token}` };
 
@@ -61,9 +54,12 @@ export const VentasPage = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
-    useEffect(() => { fetchData(); }, []);
+    useEffect(() => { 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchData(); 
+    }, [fetchData]);
 
     // Buscar Cliente por NIT
     const handleBuscarCliente = async () => {
@@ -97,42 +93,38 @@ export const VentasPage = () => {
         const productoDb = productos.find(p => p.id_producto.toString() === selectedProductId);
         if (!productoDb) return;
 
-        // Verifica si ya está en el carrito para sumar la cantidad
-        const itemExistente = carrito.find(item => item.id_producto === productoDb.id_producto);
-        const cantidadTotal = (itemExistente?.cantidad || 0) + selectedCantidad;
-
-        if (cantidadTotal > productoDb.stock_producto) {
-            alert(`Stock insuficiente. Solo quedan ${productoDb.stock_producto} unidades en total.`);
-            return;
+        try {
+            dispatchCarrito({
+                type: 'ADD_ITEM',
+                payload: {
+                    item: {
+                        id_producto: productoDb.id_producto,
+                        nombre_producto: productoDb.nombre_producto,
+                        precio_unitario: Number(productoDb.precio_producto),
+                        cantidad: selectedCantidad,
+                        subtotal: Number(productoDb.precio_producto) * selectedCantidad
+                    },
+                    maxStock: productoDb.stock_producto
+                }
+            });
+            // Reset inputs
+            setSelectedProductId('');
+            setSelectedCantidad(1);
+        } catch (error) {
+            if (error instanceof Error) {
+                alert(error.message);
+            }
         }
-
-        if (itemExistente) {
-            setCarrito(carrito.map(item =>
-                item.id_producto === productoDb.id_producto
-                    ? { ...item, cantidad: cantidadTotal, subtotal: cantidadTotal * item.precio_unitario }
-                    : item
-            ));
-        } else {
-            setCarrito([...carrito, {
-                id_producto: productoDb.id_producto,
-                nombre_producto: productoDb.nombre_producto,
-                precio_unitario: Number(productoDb.precio_producto),
-                cantidad: selectedCantidad,
-                subtotal: Number(productoDb.precio_producto) * selectedCantidad
-            }]);
-        }
-
-        // Reset inputs
-        setSelectedProductId('');
-        setSelectedCantidad(1);
     };
 
     // Remover producto del carrito
     const handleRemoveFromCart = (id_producto: number) => {
-        setCarrito(carrito.filter(item => item.id_producto !== id_producto));
+        dispatchCarrito({ type: 'REMOVE_ITEM', payload: { id_producto } });
     };
 
-    const totalEstimado = carrito.reduce((sum, item) => sum + item.subtotal, 0);
+    const totalEstimado = useMemo(() => {
+        return carrito.reduce((sum, item) => sum + item.subtotal, 0);
+    }, [carrito]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -158,7 +150,7 @@ export const VentasPage = () => {
                     id_producto: item.id_producto,
                     cantidad: item.cantidad
                 })),
-                id_empleado: user.id || user.id_empleado
+                id_empleado: user?.id || user?.id_empleado
             };
 
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/ventas`, {
@@ -173,7 +165,7 @@ export const VentasPage = () => {
             if (response.ok) {
                 // Reset states
                 setIsModalOpen(false);
-                setCarrito([]);
+                dispatchCarrito({ type: 'CLEAR_CART' });
                 setCliente({ nit: '', nombre: '', correo: '' });
                 setIsClienteRegistrado(false);
                 fetchData(); // Recargar historial y productos para actualizar stock
@@ -183,6 +175,7 @@ export const VentasPage = () => {
                 alert(`Error: ${errorData.mensaje}`);
             }
         } catch (error) {
+            console.error(error);
             alert("Error de conexión al procesar la venta");
         }
     };
