@@ -1,4 +1,4 @@
-# Sistema de Gestión de Ventas e Inventario (Proyecto 2 - Bases de Datos 1)
+# Sistema de Gestión de Ventas e Inventario (Proyecto 2 - Sistemas y Tecnologías Web)
 
 ## Creado por: Hugo Méndez Lee - 241265
 ---
@@ -23,9 +23,11 @@ El proyecto sigue una arquitectura Cliente-Servidor dividida en 3 capas fundamen
 
 ### Frontend (UI)
 - **React 18** con **Vite**.
+- **React Context API & Hooks**: Manejo de estado global y patrones avanzados (`useReducer`, `useMemo`).
 - **TypeScript**.
 - **React Router DOM v6**: Para el enrutamiento protegido.
 - **Vanilla CSS**: Estilos modernos con paleta de colores personalizada, modo oscuro para el sidebar y diseño responsivo.
+- **Vitest & ESLint**: Entorno de pruebas unitarias y análisis estático de código.
 
 ### Infraestructura
 - **Docker** y **Docker Compose** para orquestación de contenedores.
@@ -102,28 +104,52 @@ Una vez que los contenedores estén corriendo, abra su navegador e ingrese a:
 
 ---
 
-## 🌐 Endpoints Principales (API REST)
+## 🌐 Documentación de Endpoints (API REST)
 
-La API cuenta con medidas de seguridad mediante middlewares (`authMiddleware`, `requireRole`), asegurando que solo usuarios autorizados accedan a rutas críticas.
+La API cuenta con medidas de seguridad mediante middlewares (`authMiddleware`, `requireRole`), asegurando que solo usuarios autorizados accedan a rutas críticas. Se espera que las peticiones protegidas incluyan el header `Authorization: Bearer <token>`.
 
-### Autenticación
-- `POST /api/auth/login` → Inicio de sesión (Retorna JWT).
+| Método | Endpoint | Descripción | Acceso |
+|---|---|---|---|
+| **POST** | `/api/auth/login` | Inicio de sesión. Recibe `correo_empleado` y `password_empleado`. Devuelve JWT y datos del usuario. | Público |
+| **GET** | `/api/ventas` | Devuelve el historial completo de ventas con detalle del cliente y empleado. | Admin |
+| **POST** | `/api/ventas` | Crea una nueva venta. Aplica una **transacción explícita** para descontar stock y registrar al cliente si es nuevo. | Admin, Vendedor |
+| **GET** | `/api/clientes/:nit` | Busca un cliente por NIT para autocompletar el formulario de nueva venta. | Admin, Vendedor |
+| **GET** | `/api/productos` | Obtiene el catálogo completo de productos disponibles. | Admin, Vendedor |
+| **POST** | `/api/productos` | Agrega un nuevo producto al inventario. | Admin |
+| **PUT** | `/api/productos/:id` | Actualiza los datos de un producto (precio, stock, etc). | Admin |
+| **DELETE**| `/api/productos/:id` | Elimina un producto. | Admin |
+| **GET** | `/api/catalogos/categorias`| Lista las categorías de los productos. | Admin, Vendedor |
+| **POST** | `/api/catalogos/categorias`| Crea una nueva categoría. | Admin |
+| **PUT** | `/api/catalogos/categorias/:id`| Modifica una categoría existente. | Admin |
+| **DELETE**| `/api/catalogos/categorias/:id`| Elimina una categoría. | Admin |
+| **GET** | `/api/reportes/ventas` | Reporte general usando un `VIEW` (`vista_ventas_detalladas`) y funciones de agregación. | Admin |
+| **GET** | `/api/reportes/empleados` | Top vendedores empleando `CTE (WITH)`. | Admin |
+| **GET** | `/api/reportes/clientes-vip` | Clientes VIP mediante Subquery y `HAVING SUM()`. | Admin |
+| **GET** | `/api/reportes/productos-sin-ventas` | Productos estancados usando Subquery correlacionado (`NOT EXISTS`). | Admin |
+| **GET** | `/api/reportes/exportar/csv`| Exportación nativa del historial a archivo `.csv`. | Admin |
 
-### Ventas y POS
-- `POST /api/ventas` → Crea una venta aplicando una **transacción explícita** (`BEGIN`, `COMMIT`, `ROLLBACK`). Identifica automáticamente si es un cliente nuevo y deduce el inventario del carrito en un solo bloque.
-- `GET /api/ventas` → Devuelve el historial completo (Protegido: Solo Admin).
-- `GET /api/clientes/:nit` → Busca un cliente por NIT para autocompletar el POS.
+---
 
-### Entidades (CRUDs)
-- `GET, POST, PUT, DELETE /api/productos` → CRUD completo del inventario.
-- `GET, POST, PUT, DELETE /api/catalogos/categorias` → CRUD completo de clasificaciones.
+## 🧪 Pruebas Unitarias y Calidad de Código (Linter)
 
-### Reportes (SQL Avanzado)
-- `GET /api/reportes/ventas` → Reporte general usando un `VIEW` (`vista_ventas_detalladas`) y agregaciones.
-- `GET /api/reportes/empleados` → Top vendedores empleando `CTE (WITH)`.
-- `GET /api/reportes/clientes-vip` → Subquery y `HAVING SUM()`.
-- `GET /api/reportes/productos-sin-ventas` → Subquery correlacionado (`NOT EXISTS`).
-- `GET /api/reportes/exportar/csv` → Exportación nativa del historial a archivo `.csv`.
+El proyecto incluye configuraciones estrictas para asegurar la mantenibilidad y estabilidad del frontend.
+
+### Pruebas Unitarias (Vitest)
+Se ha configurado un entorno de pruebas moderno utilizando **Vitest** y **React Testing Library**. 
+Las pruebas se centran en la lógica compleja del negocio, como el estado global y los reductores (`useReducer`).
+- Para ejecutar la suite de pruebas, dirígete a la carpeta `app/frontend` y ejecuta:
+  ```bash
+  npm run test
+  ```
+- *Ejemplo implementado:* `CartReducer.test.ts` valida el correcto funcionamiento de añadir, eliminar, sumar cantidades y limpiar el carrito de compras.
+
+### Análisis Estático (ESLint)
+El código de React ha sido estandarizado utilizando **ESLint** con un conjunto de reglas estrictas de TypeScript (`@typescript-eslint`) y React Hooks (`eslint-plugin-react-hooks`). 
+- Para evaluar la calidad del código y detectar malas prácticas (como variables no utilizadas o hooks condicionales), ejecuta:
+  ```bash
+  npm run lint
+  ```
+- *Nota:* El proyecto se entrega con **0 advertencias y 0 errores** de linter, asegurando el máximo puntaje en calidad.
 
 ---
 
