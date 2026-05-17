@@ -3,6 +3,10 @@
 ## Creado por: Hugo Méndez Lee - 241265
 ---
 
+> **📌 Nota sobre las Ramas (Branches):**
+> - La rama `main` contiene el código correspondiente al proyecto 2 de la clase de **Bases de Datos 1**.
+> - La rama `web_proy2` contiene el código evolucionado y correspondiente al proyecto 2 de **Sistemas y Tecnologías Web**.
+
 Este proyecto es una aplicación web completa diseñada para administrar el inventario, procesar ventas (Punto de Venta) y generar reportes financieros.
 
 ## 🛠️ Stack Tecnológico
