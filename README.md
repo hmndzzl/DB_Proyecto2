@@ -2,6 +2,8 @@
 
 ## Creado por: Hugo Méndez Lee - 241265
 ---
+Link de la aplicacion: http://34.171.199.135:5173/login
+---
 
 > **📌 Nota sobre las Ramas (Branches):**
 > - La rama `main` contiene el código correspondiente al proyecto 2 de **Bases de Datos 1**.
