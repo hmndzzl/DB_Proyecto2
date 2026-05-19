@@ -2,6 +2,8 @@
 
 ## Creado por: Hugo Méndez Lee - 241265
 ---
+Link de la aplicación: http://34.171.199.135:5173/login
+---
 
 Este proyecto es una aplicación web completa diseñada para administrar el inventario, procesar ventas (Punto de Venta) y generar reportes financieros.
 
