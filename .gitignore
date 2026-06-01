@@ -34,3 +34,5 @@ pgdata/
 # Temp
 *.tmp
 *.docx
+
+dist/
