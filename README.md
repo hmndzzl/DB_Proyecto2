@@ -1,4 +1,4 @@
-# Sistema de Gestión de Ventas e Inventario (Proyecto 3 - Sistemas y Tecnologías Web)
+# Sistema de Gestión de Ventas e Inventario (Proyecto 3 - Bases de Datos 1)
 
 ## Creado por: Hugo Méndez Lee - 241265
 ---
