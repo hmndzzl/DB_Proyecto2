@@ -36,7 +36,7 @@ export const LoginPage = () => {
 
             // Redirigir según el rol del usuario para evitar dobles redirecciones
             const rolId = Number(data.user.rol);
-            if (rolId === 1 || rolId === 3) {
+            if (rolId === 1) {
                 window.location.href = '/dashboard';
             } else if (rolId === 4) {
                 window.location.href = '/productos';

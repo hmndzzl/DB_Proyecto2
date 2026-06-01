@@ -26,7 +26,7 @@ export const Sidebar = () => {
     };
 
     // Reglas de visualización por rol
-    const showDashboard = safeUser.rol === 1 || safeUser.rol === 3;
+    const showDashboard = safeUser.rol === 1;
     const showProductos = safeUser.rol === 1 || safeUser.rol === 2 || safeUser.rol === 3 || safeUser.rol === 4 || safeUser.rol === 5;
     const showCategorias = safeUser.rol === 1 || safeUser.rol === 2 || safeUser.rol === 3 || safeUser.rol === 4 || safeUser.rol === 5;
     const showVentas = safeUser.rol === 1 || safeUser.rol === 2 || safeUser.rol === 3 || safeUser.rol === 5;

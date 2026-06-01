@@ -21,8 +21,8 @@ function App() {
             {/* Si está autenticado, se muestra el Layout con el Sidebar */}
             <Route element={<DashboardLayout />}>
               
-              {/* Dashboard: Exclusivo para Administrador (1) y Supervisor (3) */}
-              <Route element={<ProtectedRoute allowedRoles={[1, 3]} />}>
+              {/* Dashboard: Exclusivo para Administrador (1) */}
+              <Route element={<ProtectedRoute allowedRoles={[1]} />}>
                 <Route path="/dashboard" element={<DashboardPage />} />
               </Route>
               
