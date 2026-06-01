@@ -4,12 +4,12 @@ import { Categoria } from './Categoria';
 import { Proveedor } from './Proveedor';
 
 export class Producto extends Model {
-    public id_producto!: number;
-    public nombre_producto!: string;
-    public precio_producto!: number;
-    public stock_producto!: number;
-    public id_categoria!: number;
-    public id_proveedor!: number;
+    declare id_producto: number;
+    declare nombre_producto: string;
+    declare precio_producto: number;
+    declare stock_producto: number;
+    declare id_categoria: number;
+    declare id_proveedor: number;
 }
 
 Producto.init(

@@ -32,7 +32,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
                 id_rol: empleado.id_rol
             },
             process.env.JWT_SECRET as string,
-            { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
+            { expiresIn: (process.env.JWT_EXPIRES_IN || '24h') as any }
         );
 
         // 4. Responder con el token y datos básicos

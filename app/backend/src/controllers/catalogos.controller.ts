@@ -91,7 +91,7 @@ export const actualizarCategoria = async (req: Request, res: Response): Promise<
                 { where: { id_categoria: id }, transaction: t }
             );
             if (rowsAffected === 0) return null;
-            return await Categoria.findByPk(id, { transaction: t });
+            return await Categoria.findByPk(Number(id), { transaction: t });
         });
 
         if (!categoriaActualizada) {

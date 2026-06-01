@@ -54,7 +54,7 @@ export const obtenerProductoPorId = async (req: Request, res: Response): Promise
     const idRol = req.user?.id_rol;
     try {
         const producto = await executeInRoleTransaction(idRol, async (t) => {
-            return await Producto.findByPk(id, { transaction: t });
+            return await Producto.findByPk(Number(id), { transaction: t });
         });
 
         if (!producto) {
@@ -92,7 +92,7 @@ export const crearProducto = async (req: Request, res: Response): Promise<any> =
             const id_producto = spResult?.p_id_producto;
 
             // Retornar el registro creado consultándolo por el ORM
-            return await Producto.findByPk(id_producto, { transaction: t });
+            return await Producto.findByPk(Number(id_producto), { transaction: t });
         });
 
         res.status(201).json({
@@ -126,7 +126,7 @@ export const actualizarProducto = async (req: Request, res: Response): Promise<a
             );
 
             if (rowsAffected === 0) return null;
-            return await Producto.findByPk(id, { transaction: t });
+            return await Producto.findByPk(Number(id), { transaction: t });
         });
 
         if (!productoActualizado) {

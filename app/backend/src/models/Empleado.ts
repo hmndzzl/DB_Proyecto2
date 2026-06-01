@@ -3,13 +3,13 @@ import sequelize from '../config/sequelize';
 import { Rol } from './Rol';
 
 export class Empleado extends Model {
-    public id_empleado!: number;
-    public nombre_empleado!: string;
-    public correo_empleado!: string;
-    public password_empleado!: string;
-    public fecha_contratacion!: Date;
-    public id_rol!: number;
-    public id_encargado!: number | null;
+    declare id_empleado: number;
+    declare nombre_empleado: string;
+    declare correo_empleado: string;
+    declare password_empleado: string;
+    declare fecha_contratacion: Date;
+    declare id_rol: number;
+    declare id_encargado: number | null;
 }
 
 Empleado.init(

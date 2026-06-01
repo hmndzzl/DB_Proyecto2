@@ -2,8 +2,8 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize';
 
 export class Proveedor extends Model {
-    public id_proveedor!: number;
-    public nombre_proveedor!: string;
+    declare id_proveedor: number;
+    declare nombre_proveedor: string;
 }
 
 Proveedor.init(

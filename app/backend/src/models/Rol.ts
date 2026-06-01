@@ -2,8 +2,8 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize';
 
 export class Rol extends Model {
-    public id_rol!: number;
-    public nombre_rol!: string;
+    declare id_rol: number;
+    declare nombre_rol: string;
 }
 
 Rol.init(

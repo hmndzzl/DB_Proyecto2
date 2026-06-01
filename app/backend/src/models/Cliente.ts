@@ -2,10 +2,10 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize';
 
 export class Cliente extends Model {
-    public id_cliente!: number;
-    public nombre_cliente!: string;
-    public correo_cliente!: string | null;
-    public nit_cliente!: string | null;
+    declare id_cliente: number;
+    declare nombre_cliente: string;
+    declare correo_cliente: string | null;
+    declare nit_cliente: string | null;
 }
 
 Cliente.init(

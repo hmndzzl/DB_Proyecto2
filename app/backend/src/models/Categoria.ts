@@ -2,9 +2,9 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/sequelize';
 
 export class Categoria extends Model {
-    public id_categoria!: number;
-    public nombre_categoria!: string;
-    public descripcion_categoria!: string | null;
+    declare id_categoria: number;
+    declare nombre_categoria: string;
+    declare descripcion_categoria: string | null;
 }
 
 Categoria.init(
