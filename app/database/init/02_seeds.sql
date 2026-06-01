@@ -49,18 +49,23 @@ INSERT INTO cliente (nombre_cliente, correo_cliente, nit_cliente) VALUES
 ('Roberto Aguilar', 'raguilar@mail.com', '1023-W'), ('Mónica Navarro', 'monica.n@mail.com', '1024-X'),
 ('Hugo Delgado', 'hdelgado@mail.com', '1025-Y');
 
--- 4. Roles (2 roles)
-INSERT INTO rol (nombre_rol) VALUES ('Administrador'), ('Vendedor');
+-- 4. Roles (5 roles)
+INSERT INTO rol (nombre_rol) VALUES 
+('Administrador'), 
+('Vendedor'),
+('Supervisor'),
+('Inventario'),
+('Auditor');
 
 -- 5. EMPLEADOS (25 registros, ID 1 es el gerente)
 -- Nota: La contraseña para todos los usuarios es '123456'
--- id_rol: 1 (Administrador), 2 (Vendedor)
+-- id_rol: 1 (Administrador), 2 (Vendedor), 3 (Supervisor), 4 (Inventario), 5 (Auditor)
 INSERT INTO empleado (nombre_empleado, correo_empleado, password_empleado, fecha_contratacion, id_rol, id_encargado) VALUES
 ('Carlos Valdez', 'gerente@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2020-01-01', 1, NULL),
 ('Luis Arana', 'emp2@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-02-15', 2, 1),
-('María José Pinto', 'emp3@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-03-20', 2, 1),
-('Ana Lima', 'emp4@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-04-10', 2, 1),
-('Pedro Paz', 'emp5@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-05-05', 2, 1),
+('María José Pinto', 'supervisor@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-03-20', 3, 1),
+('Ana Lima', 'inventario@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-04-10', 4, 1),
+('Pedro Paz', 'auditor@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-05-05', 5, 1),
 ('Juan Santos', 'emp6@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-06-12', 2, 2),
 ('Marta Silva', 'emp7@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-07-22', 2, 2),
 ('Julia Reyes', 'emp8@tienda.com', '$2a$12$9OZi0iTpaeyndU55GILt.eALcKS/DVDPmpgS3XVY5sATj75bk58dG', '2021-08-30', 2, 2),
