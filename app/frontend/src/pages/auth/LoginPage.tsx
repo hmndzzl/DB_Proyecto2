@@ -64,7 +64,7 @@ export const LoginPage = () => {
             <div className="login-card">
                 <div className="login-header">
                     <h1>Tienda Nova</h1>
-                    <p>Gestión de Inventario y Ventas (Proy3)</p>
+                    <p>Gestión de Inventario y Ventas</p>
                 </div>
 
                 {error && <div className="login-error">{error}</div>}
@@ -105,43 +105,43 @@ export const LoginPage = () => {
 
                 {/* Sección Premium: Selector rápido de usuarios para calificación */}
                 <div className="grading-accounts-section">
-                    <h3>Cuentas de Calificación</h3>
+                    <h3>Cuentas de Prueba</h3>
                     <p className="grading-subtitle">Haz clic para auto-completar y probar cada rol:</p>
                     <div className="grading-buttons-grid">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => fillCredentials('gerente@tienda.com')}
                             className="btn-grading admin"
                             title="Administrador (Acceso Completo)"
                         >
                             🔑 Administrador
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => fillCredentials('emp2@tienda.com')}
                             className="btn-grading seller"
                             title="Vendedor (Clientes y Ventas)"
                         >
                             💼 Vendedor
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => fillCredentials('supervisor@tienda.com')}
                             className="btn-grading supervisor"
                             title="Supervisor (Productos, Categorías, Clientes, Reportes)"
                         >
                             👔 Supervisor
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => fillCredentials('inventario@tienda.com')}
                             className="btn-grading inventory"
                             title="Inventario (Productos, Categorías, Proveedores)"
                         >
                             📦 Inventario
                         </button>
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             onClick={() => fillCredentials('auditor@tienda.com')}
                             className="btn-grading auditor"
                             title="Auditor (Solo lectura completa)"
