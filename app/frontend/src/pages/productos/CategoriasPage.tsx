@@ -22,7 +22,7 @@ export const CategoriasPage = () => {
     });
 
     const { token, user } = useAuth();
-    const esAdmin = user?.rol === 1;
+    const tienePermisoEscritura = user?.rol === 1 || user?.rol === 3 || user?.rol === 4;
 
     const fetchData = useCallback(async () => {
         try {
@@ -116,7 +116,7 @@ export const CategoriasPage = () => {
                     <h1>Gestión de Categorías</h1>
                     <p>Catálogo de clasificaciones de productos</p>
                 </div>
-                {esAdmin && <button className="btn-agregar" onClick={() => handleOpenModal()}>+ Nueva Categoría</button>}
+                {tienePermisoEscritura && <button className="btn-agregar" onClick={() => handleOpenModal()}>+ Nueva Categoría</button>}
             </header>
 
             {isLoading ? (
@@ -128,7 +128,7 @@ export const CategoriasPage = () => {
                             <tr>
                                 <th>Nombre</th>
                                 <th>Descripción</th>
-                                {esAdmin && <th>Acciones</th>}
+                                {tienePermisoEscritura && <th>Acciones</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -136,7 +136,7 @@ export const CategoriasPage = () => {
                                 <tr key={c.id_categoria}>
                                     <td className="fw-bold">{c.nombre_categoria}</td>
                                     <td>{c.descripcion_categoria || <span className="text-muted">Sin descripción</span>}</td>
-                                    {esAdmin && (
+                                    {tienePermisoEscritura && (
                                         <td className="acciones-cell">
                                             <button className="btn-icon edit" onClick={() => handleOpenModal(c)}>✏️</button>
                                             <button className="btn-icon delete" onClick={() => eliminarCategoria(c.id_categoria, c.nombre_categoria)}>🗑️</button>

@@ -35,6 +35,7 @@ export const VentasPage = () => {
     const [isSearchingCliente, setIsSearchingCliente] = useState(false);
 
     const { token, user } = useAuth();
+    const tienePermisoEscritura = user?.rol === 1 || user?.rol === 2 || user?.rol === 3;
 
     const fetchData = useCallback(async () => {
         try {
@@ -187,9 +188,11 @@ export const VentasPage = () => {
                     <h1>Registro de Ventas</h1>
                     <p>Facturación, carrito y salidas de inventario</p>
                 </div>
-                <button className="btn-nueva-venta" onClick={() => setIsModalOpen(true)}>
-                    + Nueva Venta
-                </button>
+                {tienePermisoEscritura && (
+                    <button className="btn-nueva-venta" onClick={() => setIsModalOpen(true)}>
+                        + Nueva Venta
+                    </button>
+                )}
             </header>
 
             {isLoading ? (

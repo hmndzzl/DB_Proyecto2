@@ -114,3 +114,77 @@
     background-color: var(--gris-arena);
     cursor: not-allowed;
 }
+
+/* Sección de Cuentas de Calificación */
+.grading-accounts-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gris-arena);
+    text-align: center;
+}
+
+.grading-accounts-section h3 {
+    font-size: 1.1rem;
+    margin: 0 0 0.2rem 0;
+    color: var(--negro-suave);
+    font-weight: 600;
+}
+
+.grading-subtitle {
+    font-size: 0.8rem;
+    color: var(--gris-carbon);
+    margin: 0 0 1rem 0;
+}
+
+.grading-buttons-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+}
+
+/* Botón auditor ocupa las dos columnas */
+.btn-grading.auditor {
+    grid-column: span 2;
+}
+
+.btn-grading {
+    background-color: var(--blanco-perla);
+    border: 1px solid var(--gris-arena);
+    color: var(--negro-suave);
+    padding: 0.5rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.btn-grading:hover {
+    background-color: var(--arena-suave);
+    border-color: var(--gris-carbon);
+    transform: translateY(-1px);
+}
+
+.btn-grading:active {
+    transform: translateY(1px);
+}
+
+.btn-grading.admin {
+    border-left: 3px solid #E28743;
+}
+.btn-grading.seller {
+    border-left: 3px solid #1E3D59;
+}
+.btn-grading.supervisor {
+    border-left: 3px solid #17B890;
+}
+.btn-grading.inventory {
+    border-left: 3px solid #FFC107;
+}
+.btn-grading.auditor {
+    border-left: 3px solid #757575;
+}

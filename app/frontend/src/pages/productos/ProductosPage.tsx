@@ -39,7 +39,7 @@ export const ProductosPage = () => {
     });
 
     const { token, user } = useAuth();
-    const esAdmin = user?.rol === 1;
+    const tienePermisoEscritura = user?.rol === 1 || user?.rol === 3 || user?.rol === 4;
 
     const fetchData = useCallback(async () => {
         try {
@@ -149,7 +149,7 @@ export const ProductosPage = () => {
                     <h1>Inventario de Productos</h1>
                     <p>Gestión de stock</p>
                 </div>
-                {esAdmin && <button className="btn-agregar" onClick={() => handleOpenModal()}>+ Nuevo Producto</button>}
+                {tienePermisoEscritura && <button className="btn-agregar" onClick={() => handleOpenModal()}>+ Nuevo Producto</button>}
             </header>
 
             {isLoading ? (
@@ -163,7 +163,7 @@ export const ProductosPage = () => {
                                 <th>Categoría</th>
                                 <th>Precio</th>
                                 <th>Stock</th>
-                                {esAdmin && <th>Acciones</th>}
+                                {tienePermisoEscritura && <th>Acciones</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -177,7 +177,7 @@ export const ProductosPage = () => {
                                             {p.stock_producto} uds.
                                         </span>
                                     </td>
-                                    {esAdmin && (
+                                    {tienePermisoEscritura && (
                                         <td className="acciones-cell">
                                             <button className="btn-icon edit" onClick={() => handleOpenModal(p)}>✏️</button>
                                             <button className="btn-icon delete" onClick={() => eliminarProducto(p.id_producto, p.nombre_producto)}>🗑️</button>

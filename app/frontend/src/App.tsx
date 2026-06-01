@@ -20,14 +20,27 @@ function App() {
           <Route element={<ProtectedRoute />}>
             {/* Si está autenticado, se muestra el Layout con el Sidebar */}
             <Route element={<DashboardLayout />}>
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/productos" element={<ProductosPage />} />
-              <Route path="/categorias" element={<CategoriasPage />} />
-              <Route path="/ventas" element={<VentasPage />} />
+              
+              {/* Dashboard: Exclusivo para Administrador (1) y Supervisor (3) */}
+              <Route element={<ProtectedRoute allowedRoles={[1, 3]} />}>
+                <Route path="/dashboard" element={<DashboardPage />} />
+              </Route>
+              
+              {/* Inventario / Productos / Categorías: Accesible para todos los roles (1, 2, 3, 4, 5) */}
+              <Route element={<ProtectedRoute allowedRoles={[1, 2, 3, 4, 5]} />}>
+                <Route path="/productos" element={<ProductosPage />} />
+                <Route path="/categorias" element={<CategoriasPage />} />
+              </Route>
+
+              {/* Ventas: Accesible por Administrador (1), Vendedor (2), Supervisor (3) y Auditor (5) */}
+              <Route element={<ProtectedRoute allowedRoles={[1, 2, 3, 5]} />}>
+                <Route path="/ventas" element={<VentasPage />} />
+              </Route>
+
             </Route>
           </Route>
 
-          {/* Redirección por defecto: Si se escribe cualquier otra URL, lo manda al login */}
+          {/* Redirección por defecto */}
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </AuthProvider>
