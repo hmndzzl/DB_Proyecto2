@@ -177,6 +177,10 @@ GRANT USAGE, SELECT ON SEQUENCE producto_id_producto_seq, categoria_id_categoria
 -- 7. Otorgar permisos al rol_auditor (Solo lectura de todas las tablas y vistas)
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO rol_auditor;
 
+-- 7.1. Permitir lectura de la tabla empleado (necesaria para JOIN de nombre de vendedor en ventas)
+GRANT SELECT ON empleado TO rol_vendedor, rol_supervisor, rol_inventario, rol_auditor;
+
+
 -- 8. Otorgar permisos para que el usuario proy3 pueda asumir estos roles
 GRANT rol_admin TO proy3;
 GRANT rol_vendedor TO proy3;
