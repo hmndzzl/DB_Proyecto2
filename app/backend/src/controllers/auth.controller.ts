@@ -1,23 +1,21 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import pool from '../config/db';
+import { Empleado } from '../models/Empleado';
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response): Promise<any> => {
     const { correo_empleado, password_empleado } = req.body;
 
     try {
-        // 1. Buscar al empleado por correo
-        const result = await pool.query(
-            'SELECT id_empleado, nombre_empleado, password_empleado, id_rol FROM empleado WHERE correo_empleado = $1',
-            [correo_empleado]
-        );
+        // 1. Buscar al empleado por correo usando el ORM
+        const empleado = await Empleado.findOne({
+            where: { correo_empleado },
+            attributes: ['id_empleado', 'nombre_empleado', 'password_empleado', 'id_rol']
+        });
 
-        if (result.rows.length === 0) {
+        if (!empleado) {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
-
-        const empleado = result.rows[0];
 
         // 2. Verificar la contraseña con bcrypt
         const isPasswordValid = await bcrypt.compare(password_empleado, empleado.password_empleado);

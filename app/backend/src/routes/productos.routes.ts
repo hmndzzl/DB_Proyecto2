@@ -18,9 +18,9 @@ router.use(authMiddleware);
 router.get('/', obtenerProductos);
 router.get('/:id', obtenerProductoPorId);
 
-// Rutas RESTRINGIDAS: Solo el Administrador puede modificar el inventario
-router.post('/', requireRole([Roles.ADMINISTRADOR]), crearProducto);
-router.put('/:id', requireRole([Roles.ADMINISTRADOR]), actualizarProducto);
-router.delete('/:id', requireRole([Roles.ADMINISTRADOR]), eliminarProducto);
+// Rutas RESTRINGIDAS: Administrador, Supervisor e Inventario pueden modificar el inventario
+router.post('/', requireRole([Roles.ADMINISTRADOR, Roles.SUPERVISOR, Roles.INVENTARIO]), crearProducto);
+router.put('/:id', requireRole([Roles.ADMINISTRADOR, Roles.SUPERVISOR, Roles.INVENTARIO]), actualizarProducto);
+router.delete('/:id', requireRole([Roles.ADMINISTRADOR, Roles.SUPERVISOR, Roles.INVENTARIO]), eliminarProducto);
 
 export default router;

@@ -1,58 +1,148 @@
 import { Request, Response } from 'express';
-import pool from '../config/db';
+import sequelize from '../config/sequelize';
+import { executeInRoleTransaction } from '../config/roleExecutor';
+import { Categoria } from '../models/Categoria';
+import { Proveedor } from '../models/Proveedor';
 
-export const obtenerCategorias = async (_req: Request, res: Response) => {
+// ==========================================
+// 1. Obtener todas las categorías (ORM)
+// ==========================================
+export const obtenerCategorias = async (req: Request, res: Response): Promise<any> => {
+    const idRol = req.user?.id_rol;
     try {
-        const result = await pool.query('SELECT id_categoria, nombre_categoria, descripcion_categoria FROM categoria ORDER BY nombre_categoria ASC');
-        res.json(result.rows);
-    } catch (error) {
+        const categorias = await executeInRoleTransaction(idRol, async (t) => {
+            return await Categoria.findAll({
+                order: [['nombre_categoria', 'ASC']],
+                transaction: t
+            });
+        });
+        res.json(categorias);
+    } catch (error: any) {
         console.error('Error al obtener categorías:', error);
-        res.status(500).json({ mensaje: 'Error interno del servidor' });
+        const isPermissionError = error.parent?.code === '42501';
+        res.status(isPermissionError ? 403 : 500).json({
+            mensaje: isPermissionError
+                ? 'Acceso denegado: Permisos insuficientes a nivel de base de datos (DBMS)'
+                : 'Error interno del servidor al obtener categorías'
+        });
     }
 };
 
-export const obtenerProveedores = async (_req: Request, res: Response) => {
+// ==========================================
+// 2. Obtener todos los proveedores (ORM)
+// ==========================================
+export const obtenerProveedores = async (req: Request, res: Response): Promise<any> => {
+    const idRol = req.user?.id_rol;
     try {
-        const result = await pool.query('SELECT id_proveedor, nombre_proveedor FROM proveedor ORDER BY nombre_proveedor ASC');
-        res.json(result.rows);
-    } catch (error) {
+        const proveedores = await executeInRoleTransaction(idRol, async (t) => {
+            return await Proveedor.findAll({
+                order: [['nombre_proveedor', 'ASC']],
+                transaction: t
+            });
+        });
+        res.json(proveedores);
+    } catch (error: any) {
         console.error('Error al obtener proveedores:', error);
-        res.status(500).json({ mensaje: 'Error interno del servidor' });
+        const isPermissionError = error.parent?.code === '42501';
+        res.status(isPermissionError ? 403 : 500).json({
+            mensaje: isPermissionError
+                ? 'Acceso denegado: Permisos insuficientes a nivel de base de datos (DBMS)'
+                : 'Error interno del servidor al obtener proveedores'
+        });
     }
 };
 
-export const crearCategoria = async (req: Request, res: Response) => {
+// ==========================================
+// 3. Crear una nueva categoría (ORM)
+// ==========================================
+export const crearCategoria = async (req: Request, res: Response): Promise<any> => {
     const { nombre_categoria, descripcion_categoria } = req.body;
+    const idRol = req.user?.id_rol;
     try {
-        const query = 'INSERT INTO categoria (nombre_categoria, descripcion_categoria) VALUES ($1, $2) RETURNING *';
-        const result = await pool.query(query, [nombre_categoria, descripcion_categoria]);
-        res.status(201).json({ mensaje: 'Categoría creada', categoria: result.rows[0] });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'Error al crear la categoría' });
+        const nuevaCategoria = await executeInRoleTransaction(idRol, async (t) => {
+            return await Categoria.create(
+                { nombre_categoria, descripcion_categoria },
+                { transaction: t }
+            );
+        });
+        res.status(201).json({ mensaje: 'Categoría creada', categoria: nuevaCategoria });
+    } catch (error: any) {
+        console.error('Error al crear categoría:', error);
+        const isPermissionError = error.parent?.code === '42501';
+        res.status(isPermissionError ? 403 : 500).json({
+            mensaje: isPermissionError
+                ? 'Acceso denegado: Permisos de escritura insuficientes en la base de datos (DBMS)'
+                : 'Error al crear la categoría'
+        });
     }
 };
 
-export const actualizarCategoria = async (req: Request, res: Response) => {
+// ==========================================
+// 4. Actualizar una categoría (ORM)
+// ==========================================
+export const actualizarCategoria = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
     const { nombre_categoria, descripcion_categoria } = req.body;
+    const idRol = req.user?.id_rol;
     try {
-        const query = 'UPDATE categoria SET nombre_categoria = $1, descripcion_categoria = $2 WHERE id_categoria = $3 RETURNING *';
-        const result = await pool.query(query, [nombre_categoria, descripcion_categoria, id]);
-        if (result.rows.length === 0) return res.status(404).json({ mensaje: 'Categoría no encontrada' });
-        res.json({ mensaje: 'Categoría actualizada', categoria: result.rows[0] });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'Error al actualizar la categoría' });
+        const categoriaActualizada = await executeInRoleTransaction(idRol, async (t) => {
+            const [rowsAffected] = await Categoria.update(
+                { nombre_categoria, descripcion_categoria },
+                { where: { id_categoria: id }, transaction: t }
+            );
+            if (rowsAffected === 0) return null;
+            return await Categoria.findByPk(id, { transaction: t });
+        });
+
+        if (!categoriaActualizada) {
+            return res.status(404).json({ mensaje: 'Categoría no encontrada' });
+        }
+        res.json({ mensaje: 'Categoría actualizada', categoria: categoriaActualizada });
+    } catch (error: any) {
+        console.error('Error al actualizar categoría:', error);
+        const isPermissionError = error.parent?.code === '42501';
+        res.status(isPermissionError ? 403 : 500).json({
+            mensaje: isPermissionError
+                ? 'Acceso denegado: Permisos de modificación insuficientes en la base de datos (DBMS)'
+                : 'Error al actualizar la categoría'
+        });
     }
 };
 
-export const eliminarCategoria = async (req: Request, res: Response) => {
+// ==========================================
+// 5. Eliminar una categoría de forma segura (Stored Procedure)
+// ==========================================
+export const eliminarCategoria = async (req: Request, res: Response): Promise<any> => {
     const { id } = req.params;
+    const idRol = req.user?.id_rol;
     try {
-        const query = 'DELETE FROM categoria WHERE id_categoria = $1 RETURNING *';
-        const result = await pool.query(query, [id]);
-        if (result.rows.length === 0) return res.status(404).json({ mensaje: 'Categoría no encontrada' });
-        res.json({ mensaje: 'Categoría eliminada' });
-    } catch (error) {
-        res.status(500).json({ mensaje: 'No se puede eliminar la categoría. Asegúrese de que no tenga productos asociados.' });
+        const result = await executeInRoleTransaction(idRol, async (t) => {
+            // Invocar el stored procedure sp_eliminar_categoria_segura
+            const [spResult]: any = await sequelize.query(
+                'CALL sp_eliminar_categoria_segura(?, ?, ?)',
+                {
+                    replacements: [id, null, null],
+                    transaction: t
+                }
+            );
+            return {
+                exito: spResult?.p_exito,
+                mensaje: spResult?.p_mensaje
+            };
+        });
+
+        if (!result.exito) {
+            return res.status(400).json({ mensaje: result.mensaje });
+        }
+
+        res.json({ mensaje: result.mensaje });
+    } catch (error: any) {
+        console.error('Error al eliminar categoría:', error);
+        const isPermissionError = error.parent?.code === '42501';
+        res.status(isPermissionError ? 403 : 500).json({
+            mensaje: isPermissionError
+                ? 'Acceso denegado: Permisos de eliminación insuficientes en la base de datos (DBMS)'
+                : 'Error al procesar la eliminación de la categoría'
+        });
     }
 };
